@@ -94,29 +94,33 @@
             <img src="./static/logo.png" alt="GRoot Logo">
             <div>
               <h1>GRoot incident report</h1>
-              <p>Auto created at: 2024. 9. 21/11:18:21</p>
+              <p id="createdTime">Auto created at: </p>
             </div>
         </div>
         <br>
 
         <div class="section">
             <h2>Abstract</h2>
-            <table style="width: 50%;">
+            <table style="width: 70%;">
                 <tr>
-                    <th>name</th>
-                    <td class="parameter" pn="name">imnotrootkit.sys</td>
+                    <th>Identifier</th>
+                    <td class="parameter" pn="identifier">Unknown</td>
                 </tr>
                 <tr>
-                    <th>type</th>
-                    <td class="parameter" pn="type">r77</td>
+                    <th>Type</th>
+                    <td class="parameter" pn="type">Unknown</td>
                 </tr>
                 <tr>
-                    <th>detect method</th>
-                    <td class="parameter" pn="detectMethod">diff-based</td>
+                    <th>Detect method</th>
+                    <td class="parameter" pn="detectMethod">Unknown</td>
                 </tr>
                 <tr>
-                    <th>alleged attacker</th>
-                    <td class="parameter" pn="allegedAttacker">lazarus</td>
+                    <th>Targeted Resource</th>
+                    <td class="parameter" pn="targetedResource">Unknown</td>
+                </tr>
+                <tr>
+                    <th>Threat Level</th>
+                    <td class="parameter" pn="threatLevel">Unknown</td>
                 </tr>
             </table>
         </div>
@@ -128,18 +132,22 @@
 
         <div class="section">
             <h2>Behavior & Functional Analysis</h2>
-            <h3 class="parameter" pn="type">DKOM</h3>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,</p>
+            <h3 class="parameter" pn="type">Unknown</h3>
+            <p>...</p>
         </div>
 
         <div class="section">
-            <h2>Detection Methods</h2>
+            <h2>Targeted Resource</h2>
+            <h3 class="parameter" pn="targetedResource">Unknown</h3>
+            <p>...</p>
         </div>
     </div>
 
     <button id="pdfButton">Export to PDF</button>
 
     <script>
+        document.querySelector('#createdTime').textContent += (new Date()).toTimeString();
+
         function getObjectFromHash() {
             const hashString = window.location.hash.substring(1);
 
