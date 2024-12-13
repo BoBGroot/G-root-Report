@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRoot Report</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(180deg, #272935 0%, #21212D 40%, #22222E 100%);
+            color: #fff;
+            padding: 0; /* header padding 제거 */
+            display: flex;
+            align-items: center;
+        }
+        .header img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            margin-right: 20px;
+            vertical-align: middle; /* 수직 정렬 */
+        }
+        .header > div {
+            padding: 20px; /* 텍스트 div padding */
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            line-height: 1; /* line-height 조정 */
+        }
+        .header p {
+            margin-top: 5px;
+            font-size: 1.1em;
+            line-height: 1; /* line-height 조정 */
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            margin-top: 0;
+            font-size: 1.8em;
+            color: #333;
+        }
+        table {
+            width: 100%; /* 테이블 너비를 페이지 너비에 맞게 조정 */
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        p {
+            text-align: justify;
+        }
+        #pdfButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container" id="content">
+        <div class="header">
+            <img src="./static/logo.png" alt="GRoot Logo">
+            <div>
+              <h1>GRoot incident report</h1>
+              <p>Auto created at: 2024. 9. 21/11:18:21</p>
+            </div>
+        </div>
+        <br>
+
+        <div class="section">
+            <h2>Abstract</h2>
+            <table style="width: 50%;">
+                <tr>
+                    <th>name</th>
+                    <td class="parameter" pn="name">imnotrootkit.sys</td>
+                </tr>
+                <tr>
+                    <th>type</th>
+                    <td class="parameter" pn="type">r77</td>
+                </tr>
+                <tr>
+                    <th>detect method</th>
+                    <td class="parameter" pn="detectMethod">diff-based</td>
+                </tr>
+                <tr>
+                    <th>alleged attacker</th>
+                    <td class="parameter" pn="allegedAttacker">lazarus</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>What is rootkit?</h2>
+            <p>Rootkits are malicious software designed to give attackers unauthorized, privileged access to a computer or system while actively hiding their presence. They operate stealthily in the background, often masking their existence from standard detection methods. Rootkits can be used to steal sensitive information, install additional malware, or create backdoors for future access.</p>
+        </div>
+
+        <div class="section">
+            <h2>Behavior & Functional Analysis</h2>
+            <h3 class="parameter" pn="type">DKOM</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,</p>
+        </div>
+
+        <div class="section">
+            <h2>Detection Methods</h2>
+        </div>
+    </div>
+
+    <button id="pdfButton">Export to PDF</button>
+
+    <script>
+        function getObjectFromHash() {
+            const hashString = window.location.hash.substring(1);
+
+            if (!hashString) {
+                return null;
+            }
+
+            try {
+                const decodedString = atob(hashString);
+                const parsedObject = JSON.parse(decodedString);
+
+                return parsedObject;
+            } catch (error) {
+                console.error("Error decoding or parsing hash string:", error);
+                return {};
+            }
+        }
+
+        document.getElementById('pdfButton').addEventListener('click', function() {
+            window.scrollTo(0, 0);
+
+            const element = document.getElementById('content');
+            html2pdf().set({
+                margin: [0, 0, 0, 5], // 상하좌우 여백 조정 (단위: mm)
+            }).from(element).save('GRoot_Report.pdf');
+        });
+        
+        {
+            const elements = document.querySelectorAll(".parameter");
+            const paramJson = getObjectFromHash();
+            elements.forEach(e => {
+                const param = paramJson[e.getAttribute('pn')];
+                if (param) {
+                    e.textContent = param;
+                }
+            });
+        }
+    
+        {
+            if (elements['type']) {
+                switch (elements['type']) {
+                    case 'Dkom':
+                        break;
+                    case 'Lpe':
+                        break;
+                    case 'TokenSt':
+                        break;
+                    default:
+                }
+            }
+        }
+    </script>
+</body>
+</html>
