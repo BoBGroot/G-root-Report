@@ -112,10 +112,6 @@
                     <td class="parameter" pn="type">Unknown</td>
                 </tr>
                 <tr>
-                    <th>Detect method</th>
-                    <td class="parameter" pn="detectMethod">Unknown</td>
-                </tr>
-                <tr>
                     <th>Targeted Resource</th>
                     <td class="parameter" pn="targetedResource">Unknown</td>
                 </tr>
@@ -131,21 +127,21 @@
             <p>Rootkits are malicious software designed to give attackers unauthorized, privileged access to a computer or system while actively hiding their presence. They operate stealthily in the background, often masking their existence from standard detection methods. Rootkits can be used to steal sensitive information, install additional malware, or create backdoors for future access.</p>
         </div>
 
-        <div class="section">
+        <div class="section" id="typeDetailSection">
             <h2>Behavior & Functional Analysis</h2>
             <h3 class="parameter" pn="type">Unknown</h3>
-            <p>...</p>
+            <p id="typeDetail">...</p>
         </div>
 
-        <div class="section">
+        <div class="section" id="targetedResourceSection">
             <h2>Targeted Resource</h2>
             <h3 class="parameter" pn="targetedResource">Unknown</h3>
-            <p>...</p>
+            <p id="targetedResourceDetail">...</p>
         </div>
     </div>
 
     <button id="pdfButton">Export to PDF</button>
-
+    <script src="./data.js"></script>
     <script>
         function getObjectFromHash() {
             const hashString = window.location.hash.substring(1);
@@ -174,9 +170,9 @@
             }).from(element).save('GRoot_Report.pdf');
         });
         
+        const paramJson = getObjectFromHash();
         {
             const elements = document.querySelectorAll(".parameter");
-            const paramJson = getObjectFromHash();
             elements.forEach(e => {
                 const param = paramJson[e.getAttribute('pn')];
                 if (param) {
@@ -184,17 +180,25 @@
                 }
             });
         }
-    
+
         {
-            if (elements['type']) {
-                switch (elements['type']) {
-                    case 'Dkom':
-                        break;
-                    case 'Lpe':
-                        break;
-                    case 'TokenSt':
-                        break;
-                    default:
+            if (paramJson['type']) {
+                let detail = data.typeDetail[paramJson['type']];
+                if (detail) {
+                    document.querySelector('p#typeDetail').innerHTML = detail;
+                }
+                else {
+                    document.querySelector('div#typeDetailSection').style.display = 'none';
+                }
+            }
+
+            if (paramJson['targetedResource']) {
+                let detail = data.targetedResourceDetail[paramJson['targetedResource']];
+                if (detail) {
+                    document.querySelector('p#targetedResourceDetail').innerHTML = detail;
+                }
+                else {
+                    document.querySelector('div#targetedResourceSection').style.display = 'none';
                 }
             }
         }
